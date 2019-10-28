@@ -2,18 +2,41 @@
 <html  lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<title>社会报道</title>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
+<title>小猪猪考试加油！！</title>
+<style >
+body{
+	background-color:#b0c4de;
+}
+.con{
+  backgroud-color:red;
+  font-size:2em;
+}
+.main{
+  backgroud-color:blue;
+  text-align:centre;
+}
+</style>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#b1").click(function(){
+      alert("爱你猪猪~");
+    });
+  });
+</script>
 </head>
-<body style="background-color:#888">
-<header>===</header>
-<main>
-    <article>
-         <h1>社会报道</h1>
-         <p>这是段落1 </p>
-         <p>这是段落2</p>
-    </article>
-</main>
-<aside > 这是右边区 </aside>
-<footer> 这是页脚 </footer>
+
+<body >
+  <div class="con">
+    <h1>为我家的猪考试加油鼓劲！</h1>
+    <div class="main">
+      <p> 哈哈哈傻猪考试复习确实辛苦的，但是考完就好了啊。考完要是三个都过了，拿到资格证，岂不秒哉，想想都美滋滋，对不对哈哈哈 </p>
+
+    </div>
+      <button id="b1" type="button" name="button"> 点我</button>
+  </div>
+
 </body>
+
 </html>
