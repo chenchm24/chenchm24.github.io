@@ -2,11 +2,102 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.8.2/css/all.css" type="text/css" />
     <script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
-    <script src="https://cdn.bootcss.com/vue-router/3.1.3/vue-router.common.js"></script>
-    <title></title>
+    <title> 搜索界面 </title>
+    <style media="screen">
+      body{
+        width:100%;
+	      height:100%;
+        background:url("src/img/timg.jpg") no-repeat;
+        background-size: 100%;
+      }
+      #search_comp{
+        background-color: white;
+        width: 185px;
+        height: 25px;
+        position: relative;
+      }
+      #historylist{
+        position: relative;
+        top:-10px;
+        background-color: #c5cee1;
+      }
+      #sun_icon{
+        position: absolute;
+        top:700px;
+        left: 90%;
+        color: black;
+      }
+    </style>
   </head>
   <body>
-
+  <div id="app">
+      <div  id="search_comp" @blur="hide_hist"  v-show=show_img_flag>
+        <input type="text" v-model="keyword"   @focus="load_hist"   @keyup.enter="search" placeholder="请输入搜索内容">
+        <i class="fa fa-search"  id="search_icon" aria-hidden="true"  @click="search"></i>
+        <div id="historylist" v-show="flag ">
+          <ul  v-for="item in items"  @click=search_hist($event)>
+            {{item}}
+          </ul>
+        </div>
+      </div>
+      <i :class="icon_name" aria-hidden="true" id="sun_icon"  @mouseenter="show_img" @mouseleave="hide_img"></i>
+  </div>
   </body>
+  <script type="text/javascript">
+  var vm= new Vue({
+    el:'#app',
+    data(){
+      return  {
+        keyword:"",
+        items:[],
+        flag:false,
+        show_img_flag:true,
+        icon_name:"fa fa-toggle-off fa-2x"
+      }
+    },
+    methods:{
+          search:function(){
+            let { historyItems } = localStorage;
+            if (historyItems === undefined) {
+                localStorage.historyItems = this.keyword;
+              }
+            else {
+              historyItems = this.keyword + '|' + historyItems.split('|').filter(e => e != this.keyword).join('|');
+               localStorage.historyItems = historyItems;
+            }
+            window.location.href = 'https://www.baidu.com/s?wd='+this.keyword;
+          },
+          load_hist:function(){
+            var str=localStorage.historyItems;
+            if(str===undefined)
+            {
+              this.flag=true;
+            }
+            else{
+              this.items=str.split("|");
+              this.flag=true;
+            }
+          },
+          hide_hist:function(){
+            this.flag=false;
+          },
+          search_hist:function(event) {
+             var el = event.currentTarget;
+             window.location.href = 'https://www.baidu.com/s?wd='+el.innerHTML;
+        },
+        show_img:function(){
+            this.show_img_flag=false;
+            this.icon_name="fa fa-toggle-on fa-2x";
+        },
+
+        hide_img:function(){
+            this.show_img_flag=true;
+            this.icon_name="fa fa-toggle-off fa-2x";
+          }
+        
+    }
+  })
+  </script>
 </html>
